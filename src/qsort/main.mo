@@ -1,6 +1,8 @@
 import Debug "mo:base/Debug";
 import Nat "mo:base/Nat";
 import Int "mo:base/Int";
+import Nat32 "mo:base/Nat32";
+import Int32 "mo:base/Int32";
 import Stack "mo:base/Stack";
 import Array "mo:base/Array";
 import Option "mo:base/Option";
@@ -14,10 +16,8 @@ func partition(arr: [var Int],l : Nat,r : Nat): Nat{
                 rr := rr- 1;
             };
             arr[ll] := arr[rr];
-            
             while(ll < rr and arr[ll] <= point) {
                 ll := ll + 1;
-                
             };
             arr[rr] := arr[ll];
         };
@@ -31,10 +31,10 @@ func qsort(arr: [var Int]) : (){
     while(not(st.isEmpty())) {
         var l:?Nat = st.pop();
         var r:?Nat = st.pop();
-        var index:Nat = partition(arr,Option.unwrap(l),Option.unwrap(r)); 
-        var ll:Nat = Option.unwrap(l);
-        var rr:Nat = Option.unwrap(r);
-        Debug.print("ll"#Nat.toText(ll)#" "#Nat.toText(rr)#" "#Nat.toText(index));
+        var index:Nat = partition(arr,Nat32.toNat(Int32.toNat32(Option.unwrap(l))),Nat32.toNat(Int32.toNat32(Option.unwrap(r)))); 
+        var ll:Int = Int32.toInt(Int32.fromNat32(Nat32.fromNat(Option.unwrap(l))));
+        var rr:Int = Int32.toInt(Int32.fromNat32(Nat32.fromNat(Option.unwrap(r))));
+        Debug.print("ll"#Int.toText(ll)#" "#Int.toText(rr)#" "#Nat.toText(index));
         if(ll < index - 1) {
             st.push(index - 1);
             st.push(ll);
