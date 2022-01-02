@@ -8,18 +8,18 @@ func partition(arr: [var Int],l : Nat,r : Nat): Nat{
     var point = arr[l];
     var ll :Nat= l;
     var rr :Nat= r;
-    
          while(ll < rr) {
             while(ll < rr and arr[rr] >= point) {
+           Debug.print("here"#Nat.toText(ll)#" "#Nat.toText(rr)#" "#Int.toText(point)#" "#Int.toText(arr[rr]));
                 rr := rr- 1;
-                Debug.print(Nat.toText(rr));
             };
             arr[ll] := arr[rr];
+            
             while(ll < rr and arr[ll] <= point) {
-                ll:= ll + 1;
+                ll := ll + 1;
+                
             };
             arr[rr] := arr[ll];
-
         };
         arr[ll] := point;
         return ll;
@@ -34,18 +34,19 @@ func qsort(arr: [var Int]) : (){
         var index:Nat = partition(arr,Option.unwrap(l),Option.unwrap(r)); 
         var ll:Nat = Option.unwrap(l);
         var rr:Nat = Option.unwrap(r);
-        if(ll < index - ll) {
-            st.push(index - ll);
+        Debug.print("ll"#Nat.toText(ll)#" "#Nat.toText(rr)#" "#Nat.toText(index));
+        if(ll < index - 1) {
+            st.push(index - 1);
             st.push(ll);
         };
-        if(rr > index + ll) {
+        if(rr > index + 1) {
             st.push(rr);
-            st.push(index + ll);
+            st.push(index + 1);
         };
     };
 
 };
-let a : [var Int] = [var 9,8,7,6,5,4,3,2,1];
+let a : [var Int] = [var 1,2,3,9,8,7,6,5,4,3,2,1];
 qsort(a);
 var b = "";
 for (i in a.vals()) {
