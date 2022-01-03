@@ -1,18 +1,18 @@
-import Debug "mo:base/Debug";
-import Nat "mo:base/Nat";
-import Int "mo:base/Int";
-import Nat32 "mo:base/Nat32";
-import Int32 "mo:base/Int32";
-import Stack "mo:base/Stack";
 import Array "mo:base/Array";
+import Int "mo:base/Int";
+import Nat "mo:base/Nat";
+import Iter "mo:base/Iter";
+import Stack "mo:base/Stack";
+import Debug "mo:base/Debug";
 import Option "mo:base/Option";
-func partition(arr: [var Int],l : Nat,r : Nat): Nat{
+actor {
+    func partition(arr: [var Int],l : Nat,r : Nat): Nat{
     var point = arr[l];
     var ll :Nat= l;
     var rr :Nat= r;
          while(ll < rr) {
             while(ll < rr and arr[rr] >= point) {
-           Debug.print("here"#Nat.toText(ll)#" "#Nat.toText(rr)#" "#Int.toText(point)#" "#Int.toText(arr[rr]));
+            Debug.print("here"#Nat.toText(ll)#" "#Nat.toText(rr)#" "#Int.toText(point)#" "#Int.toText(arr[rr]));
                 rr := rr- 1;
             };
             arr[ll] := arr[rr];
@@ -24,7 +24,7 @@ func partition(arr: [var Int],l : Nat,r : Nat): Nat{
         arr[ll] := point;
         return ll;
 };
-func qsort(arr: [var Int]) : (){
+func _qsort(arr: [var Int]) : (){
     var st = Stack.Stack<Nat>();
     st.push(arr.size() - 1);
     st.push(0);
@@ -46,10 +46,9 @@ func qsort(arr: [var Int]) : (){
     };
 
 };
-let a : [var Int] = [var 1,2,3,9,8,7,6,5,4,3,2,1];
-qsort(a);
-var b = "";
-for (i in a.vals()) {
-    b := b # Int.toText(i) # ",";
-};
-Debug.print(b);
+    public query func qsort(array : [Int]) : async [Int]{
+        let res:[var Int] = Array.thaw(array);
+        _qsort(res);
+        Array.freeze<Int>(res)
+    };
+}
